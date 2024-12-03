@@ -63,11 +63,41 @@ export default function Products(){
                     
                 
             <div className="item3">
-                {
+                
                 //cart
-                }
-            </div>
-        </>
-    );
-
+                <h4>Shopping Cart</h4>
+        {cart.length === 0 ? (
+          <p>Your cart is empty.</p>
+        ) : (
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cart.map(item => (
+                <tr key={item.id}>
+                  <td>{item.name}</td>
+                  <td>{item.quantity}</td>
+                  <td>${item.price}</td>
+                  <td>${item.price * item.quantity}</td>
+                </tr>
+              ))}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colSpan="3">Total:</td>
+                <td>${calculateTotal().toFixed(2)}</td>
+              </tr>
+            </tfoot>
+          </table>
+        )}
+      </div>
+    </>
+  );
 }
+            

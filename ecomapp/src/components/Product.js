@@ -1,20 +1,36 @@
-import '../assets/CSS/layout.css';
-export default function Product(){
-    
-    return(
-        <div className="grid-item">
+import { useState } from "react";
+import "../assets/CSS/layout.css";
+import Cart from "./Cart";
+import { flowers } from "./FlowerDB";
+import Product from "./Product";
 
-            <div class="card">
-                <img  />
-                <div class="card-body">
-                    <h5 class="card-title">Price:</h5>
-                    <div class="quantity-container">
-                        <label for="quantity">Quantity:</label>
-                        <input type="number" id="quantity" name="quantity" />
-                    </div>
-                    <button class="card-button">Add to Cart</button>
-                </div>
-            </div>
+export default function Products() {
+  const [cart, setCart] = useState([]);
+  const [total, setTotal] = useState(0);
+
+  return (
+    <>
+      <div className="item1">
+        <h1>Flower Shop</h1>
+      </div>
+      <div className="item2">
+        <h4 className="card-title">Buy flowers</h4>
+        <div className="grid-container">
+          {flowers.map((flower, index) => {
+            return (
+              <Product
+                key={index}
+                product={flower}
+                setCart={setCart}
+                setTotal={setTotal}
+              />
+            );
+          })}
         </div>
-    );
+      </div>
+      <div className="item3">
+        <Cart cart={cart} total={total} />
+      </div>
+    </>
+  );
 }

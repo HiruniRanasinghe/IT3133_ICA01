@@ -9,8 +9,25 @@ export default function Products(){
     const addToCart = (flower,quantity)=>{
         if (quantity >0){
             const existingItem=cart.find(item=>item.id === flower.id);
-                }
-    }
+            if (existingItem) {
+                setCart(
+                  cart.map(item =>
+                    item.id === flower.id
+                      ? { ...item, quantity: item.quantity + quantity }
+                      : item
+                  )
+                );
+              } else {
+                setCart([...cart, { ...flower, quantity }]);
+              }
+            }
+          };
+        
+          const calculateTotal = () =>
+            cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        
+                
+    
    
     return(
         <>

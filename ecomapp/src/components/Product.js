@@ -1,36 +1,50 @@
 import { useState } from "react";
 import "../assets/CSS/layout.css";
-import Cart from "./Cart";
-import { flowers } from "./FlowerDB";
-import Product from "./Product";
 
-export default function Products() {
-  const [cart, setCart] = useState([]);
-  const [total, setTotal] = useState(0);
+export default function Product({ key, product, setCart, setTotal }) {
+  const [quantity, setQuantity] = useState(0);
+
+  const addToCart = () => {
+    if (quantity > 0) {
+      setCart((prev) => [
+        ...prev,
+        {
+          product: product.name,
+          quantity,
+          price: product.price,
+        },
+      ]);
+
+      setTotal((prevTotal) => prevTotal + product.price * quantity);
+    }
+  };
 
   return (
-    <>
-      <div className="item1">
-        <h1>Flower Shop</h1>
-      </div>
-      <div className="item2">
-        <h4 className="card-title">Buy flowers</h4>
-        <div className="grid-container">
-          {flowers.map((flower, index) => {
-            return (
-              <Product
-                key={index}
-                product={flower}
-                setCart={setCart}
-                setTotal={setTotal}
-              />
-            );
-          })}
+    <div className="grid-item" key={key}>
+      <div class="card">
+        <img
+          src={require(`../assets/image/${product.img}`)}
+          alt={product.name}
+        />
+        <div class="card-body">
+          <h5 class="card-title">{product.name} Price:</h5>
+          <div class="quantity-container">
+            <label for="quantity">Quantity:</label>
+            <input
+              type="number"
+              id="quantity"
+              name="quantity"
+              value={quantity}
+              onChange={(e) => {
+                setQuantity(e.target.value);
+              }}
+            />
+          </div>
+          <button class="card-button" onClick={addToCart}>
+            Add to Cart
+          </button>
         </div>
       </div>
-      <div className="item3">
-        <Cart cart={cart} total={total} />
-      </div>
-    </>
+    </div>
   );
 }
